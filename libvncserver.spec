@@ -10,6 +10,7 @@ Group:		Libraries
 Source0:	http://dl.sf.net/libvncserver/%{_packname}-%{version}.tar.gz
 # Source0-md5:	b6ef0d29a1247a4dbb1b5bbc6bab6458
 Patch0:		%{name}-shared.patch
+Patch1:		%{name}-linux.patch
 URL:		http://libvncserver.sourceforge.net/
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
@@ -85,6 +86,7 @@ Przyk³adowe programy wykorzystuj±ce LibVNCServer.
 %prep
 %setup -q -n %{_packname}-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
