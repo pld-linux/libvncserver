@@ -1,0 +1,11 @@
+--- LibVNCServer-0.6/configure.ac.wiget	2003-12-15 13:48:44.000000000 +0100
++++ LibVNCServer-0.6/configure.ac	2003-12-15 16:19:10.503869920 +0100
+@@ -100,7 +100,7 @@
+ AC_CHECK_FUNCS([ftime gethostbyname gethostname gettimeofday inet_ntoa memmove memset mkfifo select socket strchr strcspn strdup strerror strstr setsid])
+ 
+ # Check if /dev/vcsa1 exists, if so, define LINUX
+-AM_CONDITIONAL(LINUX, test -c /dev/vcsa1)
++AM_CONDITIONAL(LINUX, true)
+ 
+ # Check for OS X specific header
+ AC_CHECK_HEADER(ApplicationServices/ApplicationServices.h, HAVE_OSX="true")
