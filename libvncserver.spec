@@ -7,7 +7,7 @@ Release:	1
 Epoch:		0
 License:	GPL
 Group:		Libraries
-Source0:	http://dl.sf.net/libvncserver/%{_packname}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/%{name}/%{_packname}-%{version}.tar.gz
 # Source0-md5:	b6ef0d29a1247a4dbb1b5bbc6bab6458
 Patch0:		%{name}-shared.patch
 Patch1:		%{name}-linux.patch
