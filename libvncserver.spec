@@ -34,7 +34,7 @@ LibVNCServer was put together and is (actively ;-) maintained by
 Johannes Schindelin <Johannes.Schindelin@gmx.de>.
 
 %description -l pl
-LibVNCServer u³atawia pisanie serwera VNC (lub, bardziej poprawnie,
+LibVNCServer u³atwia pisanie serwera VNC (lub, bardziej poprawnie,
 programu eksportuj±cego framebuffer poprzez protokó³ Remote Frame
 Buffer).
 
@@ -44,7 +44,7 @@ napisanym przez ORL, a pó¼niej AT&T.
 Biblioteka ukrywa przed programist± nudne zadanie zarz±dzania
 klientami i schematami kompresji.
 
-LibVNCServer zosta³a posk³adana i jest (aktywanie) utrzymywana przez
+LibVNCServer zosta³a posk³adana i jest (aktywnie) utrzymywana przez
 Johannesa Schindelina <Johannes.Schindelin@gmx.de>.
 
 %package devel
