@@ -29,6 +29,15 @@ compression schemata.
 LibVNCServer was put together and is (actively ;-) maintained by
 Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
+%package devel
+Summary:	LibVNCServer headers
+Group:		Libraries
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description devel
+LibVNCServer headers
+
+
 %prep
 %setup -q -n %{_packname}-%{version}
 
@@ -49,7 +58,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/x11vnc
+%attr(755,root,root) %{_bindir}/LinuxVNC
+%{_libdir}/*.a
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/libvncserver-config
 %dir %{_includedir}/rfb
 %{_includedir}/rfb/*
-%{_libdir}/*.a
