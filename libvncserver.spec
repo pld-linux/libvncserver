@@ -5,9 +5,9 @@ Name:		libvncserver
 Version:	0.6
 Release:	1
 Epoch:		0
-License:	GPL
+License:	GPL v2
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/%{name}/%{_packname}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/libvncserver/%{_packname}-%{version}.tar.gz
 # Source0-md5:	b6ef0d29a1247a4dbb1b5bbc6bab6458
 Patch0:		%{name}-shared.patch
 Patch1:		%{name}-linux.patch
@@ -111,6 +111,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 
 %files devel
