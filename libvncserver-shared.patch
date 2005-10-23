@@ -1,110 +1,54 @@
---- LibVNCServer-0.6/test/Makefile.am.orig	2003-07-28 15:01:09.000000000 +0200
-+++ LibVNCServer-0.6/test/Makefile.am	2003-11-28 19:18:50.178882400 +0100
-@@ -1,6 +1,6 @@
--CFLAGS=-I.. -g -Wall
-+AM_CFLAGS=-I.. -Wall
- 
- noinst_PROGRAMS=tight-1
- 
--LDADD = ../libvncserver.a ../libvncclient/libvncclient.a
-+LDADD = ../libvncserver.la ../libvncclient/libvncclient.la
- 
---- LibVNCServer-0.6/contrib/Makefile.am.orig	2003-02-20 15:23:11.000000000 +0100
-+++ LibVNCServer-0.6/contrib/Makefile.am	2003-11-28 19:17:41.695293488 +0100
+--- LibVNCServer-0.7.1/test/Makefile.am.orig	2005-01-19 01:55:29.000000000 +0100
++++ LibVNCServer-0.7.1/test/Makefile.am	2005-10-23 09:52:41.931698392 +0200
 @@ -1,5 +1,5 @@
- CFLAGS = -I ..
--LDADD = ../libvncserver.a
-+LDADD = ../libvncserver.la
+-DEFINES=-I.. -g -Wall
+-LDADD = ../libvncserver/libvncserver.a ../libvncclient/libvncclient.a @WSOCKLIB@
++DEFINES=-I.. -Wall
++LDADD = ../libvncserver/libvncserver.la ../libvncclient/libvncclient.la @WSOCKLIB@
+ 
+ if HAVE_LIBPTHREAD
+ BACKGROUND_TEST=blooptest
+--- LibVNCServer-0.7.1/contrib/Makefile.am.orig	2004-12-02 01:07:44.000000000 +0100
++++ LibVNCServer-0.7.1/contrib/Makefile.am	2005-10-23 09:50:45.570388000 +0200
+@@ -1,5 +1,5 @@
+ DEFINES = -I ..
+-LDADD = ../libvncserver/libvncserver.a @WSOCKLIB@
++LDADD = ../libvncserver/libvncserver.la @WSOCKLIB@
  
  noinst_PROGRAMS=zippy
  
---- LibVNCServer-0.6/libvncclient/Makefile.am.orig	2003-07-28 15:01:09.000000000 +0200
-+++ LibVNCServer-0.6/libvncclient/Makefile.am	2003-11-28 19:18:30.941806880 +0100
-@@ -1,6 +1,6 @@
--CFLAGS=-g -I.. -I. -Wall
-+AM_CFLAGS=-I.. -I. -Wall
+--- LibVNCServer-0.7.1/libvncclient/Makefile.am.orig	2004-06-08 22:51:50.000000000 +0200
++++ LibVNCServer-0.7.1/libvncclient/Makefile.am	2005-10-23 09:51:39.650166624 +0200
+@@ -1,13 +1,13 @@
+-DEFINES=-g -I.. -I. -Wall
++DEFINES=-I.. -I. -Wall
  
 -libvncclient_a_SOURCES=cursor.c listen.c rfbproto.c sockets.c vncviewer.c
 +libvncclient_la_SOURCES=cursor.c listen.c rfbproto.c sockets.c vncviewer.c
  
- rfbproto.o: rfbproto.c corre.c hextile.c rre.c tight.c zlib.c
+-rfbproto.o: rfbproto.c corre.c hextile.c rre.c tight.c zlib.c
++rfbproto.lo: rfbproto.c corre.c hextile.c rre.c tight.c zlib.c
  
-@@ -8,11 +8,11 @@
+ EXTRA_DIST=corre.c hextile.c rre.c tight.c zlib.c
  
- $(libvncclient_a_OBJECTS): ../rfb/rfbclient.h
+-$(libvncclient_a_OBJECTS): ../rfb/rfbclient.h
++$(libvncclient_la_OBJECTS): ../rfb/rfbclient.h
  
 -lib_LIBRARIES=libvncclient.a
 +lib_LTLIBRARIES=libvncclient.la
  
- client_test_SOURCES=client_test.c
  
- noinst_PROGRAMS=client_test
- 
- #client_test_LDADD=libvncclient.a ../libvncserver.a
--client_test_LDADD=libvncclient.a
-+client_test_LDADD=libvncclient.la
---- LibVNCServer-0.6/vncterm/Makefile.am.orig	2003-02-20 15:23:11.000000000 +0100
-+++ LibVNCServer-0.6/vncterm/Makefile.am	2003-11-28 19:19:27.268243960 +0100
-@@ -2,9 +2,9 @@
- 
- noinst_HEADERS=VNConsole.h vga.h
- 
--CFLAGS=-I..
-+AM_CFLAGS=-I..
- 
--LDADD=../libvncserver.a
-+LDADD=../libvncserver.la
- INCLUDES=-I. -I../include
- 
- if LINUX
---- LibVNCServer-0.6/examples/Makefile.am.orig	2003-08-18 11:25:23.000000000 +0200
-+++ LibVNCServer-0.6/examples/Makefile.am	2003-11-28 19:18:03.278012416 +0100
+--- LibVNCServer-0.7.1/libvncserver/Makefile.am.orig	2005-03-07 17:34:08.000000000 +0100
++++ LibVNCServer-0.7.1/libvncserver/Makefile.am	2005-10-23 09:52:10.297507520 +0200
 @@ -1,4 +1,4 @@
--CFLAGS=-I.. -g -Wall
-+AM_CFLAGS=-I.. -Wall
+-DEFINES=-g -Wall
++DEFINES=-Wall
  
- if HAVE_LIBPTHREAD
- BACKGROUND_TEST=blooptest
-@@ -14,5 +14,5 @@
- noinst_PROGRAMS=example pnmshow regiontest pnmshow24 fontsel \
- 	vncev storepasswd colourmaptest simple simple15 $(BACKGROUND_TEST) $(MAC)
- 
--LDADD = ../libvncserver.a
-+LDADD = ../libvncserver.la
- 
---- LibVNCServer-0.6/configure.ac.orig	2003-10-26 20:23:41.000000000 +0100
-+++ LibVNCServer-0.6/configure.ac	2003-11-28 19:16:37.031123936 +0100
-@@ -12,7 +12,7 @@
- 	CCLD="$CC"
- fi
- AC_PROG_MAKE_SET
--AC_PROG_RANLIB
-+AC_PROG_LIBTOOL
- 
- # Options
- AH_TEMPLATE(BACKCHANNEL, [Enable BackChannel communication])
-@@ -95,8 +95,8 @@
- AC_FUNC_STRFTIME
- AC_FUNC_VPRINTF
- AC_FUNC_FORK
--AC_CHECK_LIB(nsl,gethostbyname)
--AC_CHECK_LIB(socket,socket)
-+AC_SEARCH_LIBS(gethostbyname,nsl)
-+AC_SEARCH_LIBS(socket,socket)
- AC_CHECK_FUNCS([ftime gethostbyname gethostname gettimeofday inet_ntoa memmove memset mkfifo select socket strchr strcspn strdup strerror strstr setsid])
- 
- # Check if /dev/vcsa1 exists, if so, define LINUX
---- LibVNCServer-0.6/Makefile.am.orig	2003-09-08 23:22:56.000000000 +0200
-+++ LibVNCServer-0.6/Makefile.am	2003-11-28 19:17:22.142266000 +0100
-@@ -1,4 +1,4 @@
--CFLAGS=-g -Wall
-+AM_CFLAGS=-Wall
- 
- SUBDIRS=. examples contrib vncterm classes libvncclient test
- DIST_SUBDIRS=examples contrib vncterm classes libvncclient test
-@@ -24,9 +24,9 @@
+ includedir=$(prefix)/include/rfb
+ #include_HEADERS=rfb.h rfbconfig.h rfbint.h rfbproto.h keysym.h rfbregion.h
+@@ -26,9 +26,9 @@
  	draw.c selbox.c d3des.c vncauth.c cargs.c \
- 	zrle.c zrleoutstream.c zrlepalettehelper.c
+ 	$(ZLIBSRCS) $(JPEGSRCS)
  
 -libvncserver_a_SOURCES=$(LIB_SRCS)
 +libvncserver_la_SOURCES=$(LIB_SRCS)
@@ -114,3 +58,79 @@
  
  if HAVE_RPM
  $(PACKAGE)-$(VERSION).tar.gz: dist
+--- LibVNCServer-0.7.1/x11vnc/Makefile.am.orig	2004-12-30 20:01:46.000000000 +0100
++++ LibVNCServer-0.7.1/x11vnc/Makefile.am	2005-10-23 09:53:12.170101456 +0200
+@@ -1,5 +1,5 @@
+ DEFINES = -I ..
+-LDADD = ../libvncserver/libvncserver.a @WSOCKLIB@
++LDADD = ../libvncserver/libvncserver.la @WSOCKLIB@
+ 
+ man_MANS=x11vnc.1
+ EXTRA_DIST=ChangeLog README tkx11vnc $(man_MANS)
+--- LibVNCServer-0.7.1/vncterm/Makefile.am.orig	2004-12-02 01:07:45.000000000 +0100
++++ LibVNCServer-0.7.1/vncterm/Makefile.am	2005-10-23 09:52:53.550932000 +0200
+@@ -4,7 +4,7 @@
+ 
+ CFLAGS_ADD=-I..
+ 
+-LDADD=../libvncserver/libvncserver.a @WSOCKLIB@
++LDADD=../libvncserver/libvncserver.la @WSOCKLIB@
+ INCLUDES=-I.
+ 
+ if LINUX
+--- LibVNCServer-0.7.1/examples/Makefile.am.orig	2004-12-02 01:07:44.000000000 +0100
++++ LibVNCServer-0.7.1/examples/Makefile.am	2005-10-23 09:50:53.429193280 +0200
+@@ -1,5 +1,5 @@
+ DEFINES=-I.. -g -Wall
+-LDADD = ../libvncserver/libvncserver.a @WSOCKLIB@
++LDADD = ../libvncserver/libvncserver.la @WSOCKLIB@
+ 
+ if OSX
+ MAC=mac
+--- LibVNCServer-0.7.1/client_examples/Makefile.am.orig	2004-12-02 01:07:44.000000000 +0100
++++ LibVNCServer-0.7.1/client_examples/Makefile.am	2005-10-23 09:50:35.462924568 +0200
+@@ -1,11 +1,11 @@
+ DEFINES=-I.. -g -Wall
+-LDADD = ../libvncclient/libvncclient.a @WSOCKLIB@
++LDADD = ../libvncclient/libvncclient.la @WSOCKLIB@
+ 
+ if WITH_FFMPEG
+ FFMPEG_HOME=@with_ffmpeg@
+ 
+-vnc2mpg_CFLAGS=-I$(FFMPEG_HOME)/libavformat -I$(FFMPEG_HOME)/libavcodec
+-vnc2mpg_LDADD=$(LDADD) $(FFMPEG_HOME)/libavformat/libavformat.a $(FFMPEG_HOME)/libavcodec/libavcodec.a -lmp3lame -lm
++vnc2mpg_CFLAGS=-I$(FFMPEG_HOME)/include/ffmpeg
++vnc2mpg_LDADD=$(LDADD) -lavformat -lavcodec -lmp3lame -lm
+ 
+ FFMPEG_CLIENT=vnc2mpg
+ endif
+--- LibVNCServer-0.7.1/configure.ac.orig	2005-03-07 17:41:34.000000000 +0100
++++ LibVNCServer-0.7.1/configure.ac	2005-10-23 09:54:01.937535656 +0200
+@@ -12,7 +12,7 @@
+ 	CCLD="$CC"
+ fi
+ AC_PROG_MAKE_SET
+-AC_PROG_RANLIB
++AC_PROG_LIBTOOL
+ 
+ # Options
+ AH_TEMPLATE(BACKCHANNEL, [Enable BackChannel communication])
+@@ -244,8 +244,8 @@
+ AC_FUNC_STRFTIME
+ AC_FUNC_VPRINTF
+ AC_FUNC_FORK
+-AC_CHECK_LIB(nsl,gethostbyname)
+-AC_CHECK_LIB(socket,socket)
++AC_SEARCH_LIBS(gethostbyname,nsl)
++AC_SEARCH_LIBS(socket,socket)
+ AC_CHECK_FUNCS([ftime gethostbyname gethostname gettimeofday inet_ntoa memmove memset mkfifo select socket strchr strcspn strdup strerror strstr setsid getpwuid getpwnam getuid geteuid setuid waitpid setutxent])
+ 
+ # check, if shmget is in cygipc.a
+--- LibVNCServer-0.7.1/Makefile.am.orig	2005-03-07 17:33:56.000000000 +0100
++++ LibVNCServer-0.7.1/Makefile.am	2005-10-23 09:48:22.692108800 +0200
+@@ -1,4 +1,4 @@
+-CFLAGS=-g -Wall
++AM_CFLAGS=-Wall
+ 
+ SUBDIRS=libvncserver examples contrib x11vnc vncterm classes libvncclient client_examples test
+ DIST_SUBDIRS=libvncserver examples contrib x11vnc vncterm classes libvncclient client_examples test
