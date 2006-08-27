@@ -2,22 +2,25 @@
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl):	LibVNCServer - biblioteka do ³atwego implementowania serwera VNC/RDP
 Name:		libvncserver
-Version:	0.7.1
+Version:	0.8.2
 Release:	1
 Epoch:		0
 License:	GPL v2
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libvncserver/%{_packname}-%{version}.tar.gz
-# Source0-md5:	54110288b3171551c03467cd60976d55
+# Source0-md5:	17a18e398af6c1730f72068022a152aa
 Patch0:		%{name}-shared.patch
 Patch1:		%{name}-linux.patch
 URL:		http://libvncserver.sourceforge.net/
 BuildRequires:	XFree86-devel
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtool
 BuildRequires:	zlib-devel
+# for noinst client_examples only
+#BuildRequires:	SDL-devel
+#BuildRequires:	ffmpeg-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,6 +55,8 @@ Summary:	LibVNCServer header files
 Summary(pl):	Pliki nag³ówkowe LibVNCServer
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	libjpeg-devel
+Requires:	zlib-devel
 
 %description devel
 LibVNCServer header files.
