@@ -1,6 +1,6 @@
 %define		_packname	LibVNCServer
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
-Summary(pl):	LibVNCServer - biblioteka do ≥atwego implementowania serwera VNC/RDP
+Summary(pl.UTF-8):   LibVNCServer - biblioteka do ≈Çatwego implementowania serwera VNC/RDP
 Name:		libvncserver
 Version:	0.8.2
 Release:	1
@@ -44,23 +44,23 @@ compression schemata.
 LibVNCServer was put together and is (actively ;-) maintained by
 Johannes Schindelin <Johannes.Schindelin@gmx.de>.
 
-%description -l pl
-LibVNCServer u≥atwia pisanie serwera VNC (lub, bardziej poprawnie,
-programu eksportuj±cego framebuffer poprzez protokÛ≥ Remote Frame
+%description -l pl.UTF-8
+LibVNCServer u≈Çatwia pisanie serwera VNC (lub, bardziej poprawnie,
+programu eksportujƒÖcego framebuffer poprzez protok√≥≈Ç Remote Frame
 Buffer).
 
-Jest oparty na OSXvnc, ktÛry z kolei bazuje na oryginalnym Xvnc
-napisanym przez ORL, a pÛºniej AT&T.
+Jest oparty na OSXvnc, kt√≥ry z kolei bazuje na oryginalnym Xvnc
+napisanym przez ORL, a p√≥≈∫niej AT&T.
 
-Biblioteka ukrywa przed programist± nudne zadanie zarz±dzania
+Biblioteka ukrywa przed programistƒÖ nudne zadanie zarzƒÖdzania
 klientami i schematami kompresji.
 
-LibVNCServer zosta≥a posk≥adana i jest (aktywnie) utrzymywana przez
+LibVNCServer zosta≈Ça posk≈Çadana i jest (aktywnie) utrzymywana przez
 Johannesa Schindelina <Johannes.Schindelin@gmx.de>.
 
 %package devel
 Summary:	LibVNCServer header files
-Summary(pl):	Pliki nag≥Ûwkowe LibVNCServer
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe LibVNCServer
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	libjpeg-devel
@@ -69,32 +69,32 @@ Requires:	zlib-devel
 %description devel
 LibVNCServer header files.
 
-%description devel -l pl
-Pliki nag≥Ûwkowe LibVNCServer.
+%description devel -l pl.UTF-8
+Pliki nag≈Ç√≥wkowe LibVNCServer.
 
 %package static
 Summary:	Static LibVNCServer libraries
-Summary(pl):	Statyczne biblioteki LibVNCServer
+Summary(pl.UTF-8):   Statyczne biblioteki LibVNCServer
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Static LibVNCServer libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczne biblioteki LibVNCServer.
 
 %package progs
 Summary:	Example programs that use LibVNCServer
-Summary(pl):	Przyk≥adowe programy wykorzystuj±ce LibVNCServer
+Summary(pl.UTF-8):   Przyk≈Çadowe programy wykorzystujƒÖce LibVNCServer
 Group:		Applications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description progs
 Example programs that use LibVNCServer.
 
-%description progs -l pl
-Przyk≥adowe programy wykorzystuj±ce LibVNCServer.
+%description progs -l pl.UTF-8
+Przyk≈Çadowe programy wykorzystujƒÖce LibVNCServer.
 
 %prep
 %setup -q -n %{_packname}-%{version}
