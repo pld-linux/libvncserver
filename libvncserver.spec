@@ -1,6 +1,6 @@
 %define		_packname	LibVNCServer
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
-Summary(pl.UTF-8):   LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
+Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
 Version:	0.8.2
 Release:	1
@@ -60,7 +60,7 @@ Johannesa Schindelina <Johannes.Schindelin@gmx.de>.
 
 %package devel
 Summary:	LibVNCServer header files
-Summary(pl.UTF-8):   Pliki nagłówkowe LibVNCServer
+Summary(pl.UTF-8):	Pliki nagłówkowe LibVNCServer
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	libjpeg-devel
@@ -74,7 +74,7 @@ Pliki nagłówkowe LibVNCServer.
 
 %package static
 Summary:	Static LibVNCServer libraries
-Summary(pl.UTF-8):   Statyczne biblioteki LibVNCServer
+Summary(pl.UTF-8):	Statyczne biblioteki LibVNCServer
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
@@ -86,7 +86,7 @@ Statyczne biblioteki LibVNCServer.
 
 %package progs
 Summary:	Example programs that use LibVNCServer
-Summary(pl.UTF-8):   Przykładowe programy wykorzystujące LibVNCServer
+Summary(pl.UTF-8):	Przykładowe programy wykorzystujące LibVNCServer
 Group:		Applications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
