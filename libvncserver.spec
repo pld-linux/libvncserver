@@ -15,7 +15,6 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtool
-# not really used in REL8x
 BuildRequires:	openssl-devel
 BuildRequires:	xorg-lib-libXTrap-devel
 BuildRequires:	xorg-lib-libXdamage-devel
