@@ -2,20 +2,19 @@
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
-Version:	0.9
+Version:	0.9.1
 Release:	1
 Epoch:		0
 License:	GPL v2
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libvncserver/%{_packname}-%{version}.tar.gz
-# Source0-md5:	4769d70bcd9d8390afb64c5eddfcd60e
+# Source0-md5:	aa00efc3dabde82fde9509bfbab0aba4
 Patch0:		%{name}-linux.patch
 URL:		http://libvncserver.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtool
-BuildRequires:	openssl-devel
 BuildRequires:	xorg-lib-libXTrap-devel
 BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
@@ -24,6 +23,8 @@ BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	zlib-devel
+# not used (x11vnc moved to separate package)
+#BuildRequires:	openssl-devel
 # for noinst client_examples only
 #BuildRequires:	SDL-devel
 #BuildRequires:	ffmpeg-devel
@@ -137,6 +138,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files progs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/x11vnc
 %attr(755,root,root) %{_bindir}/LinuxVNC
-%{_mandir}/man1/x11vnc.1*
