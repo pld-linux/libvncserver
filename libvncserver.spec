@@ -129,18 +129,24 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libvncclient.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libvncclient.so.0
+%attr(755,root,root) %{_libdir}/libvncserver.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libvncserver.so.0
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/libvncserver-config
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libvncclient.so
+%attr(755,root,root) %{_libdir}/libvncserver.so
+%{_libdir}/libvncclient.la
+%{_libdir}/libvncserver.la
 %{_includedir}/rfb
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libvncclient.a
+%{_libdir}/libvncserver.a
 
 %files progs
 %defattr(644,root,root,755)
