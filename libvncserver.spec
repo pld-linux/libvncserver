@@ -1,20 +1,24 @@
-%define		_packname	LibVNCServer
+%define		srcname	LibVNCServer
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
-Version:	0.9.7
-Release:	3
+Version:	0.9.8
+Release:	1
 Epoch:		0
 License:	GPL v2
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/libvncserver/%{_packname}-%{version}.tar.gz
-# Source0-md5:	14af5bdae461df4666c18e5f83c150c4
+Source0:	http://downloads.sourceforge.net/libvncserver/%{srcname}-%{version}.tar.gz
+# Source0-md5:	dda9e75a1d5d7c37bb57d90ead7b32b3
 Patch0:		%{name}-linux.patch
 URL:		http://libvncserver.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
+BuildRequires:	gnutls-devel >= 2.4.0
+BuildRequires:	libgcrypt-devel >= 1.4.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtool
+BuildRequires:	sed >= 4.0
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXfixes-devel
@@ -27,6 +31,8 @@ BuildRequires:	zlib-devel
 # for noinst client_examples only
 #BuildRequires:	SDL-devel
 #BuildRequires:	ffmpeg-devel
+Requires:	gnutls >= 2.4.0
+Requires:	libgcrypt >= 1.4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -61,6 +67,8 @@ Summary:	LibVNCServer header files
 Summary(pl.UTF-8):	Pliki nagłówkowe LibVNCServer
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	gnutls-devel >= 2.4.0
+Requires:	libgcrypt-devel >= 1.4.0
 Requires:	libjpeg-devel
 Requires:	zlib-devel
 
@@ -95,7 +103,7 @@ Example programs that use LibVNCServer.
 Przykładowe programy wykorzystujące LibVNCServer.
 
 %prep
-%setup -q -n %{_packname}-%{version}
+%setup -q -n %{srcname}-%{version}
 %patch0 -p1
 
 install -d x11vnc/misc
@@ -103,6 +111,8 @@ touch x11vnc/Makefile.in x11vnc/misc/Makefile.in
 
 awk 'BEGIN { f=1; } /# libtool.m4/ { f=0; } { if (f) { print $0; } }' acinclude.m4 > acinclude.m4.new
 mv acinclude.m4.new acinclude.m4
+
+sed -i -e '/AC_CONFIG_FILES.*x11vnc/d' configure.ac
 
 %build
 %{__libtoolize}
@@ -119,6 +129,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# *.la not removed - *.pc don't contain Requires.private nor Libs.private
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -142,6 +154,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libvncclient.la
 %{_libdir}/libvncserver.la
 %{_includedir}/rfb
+%{_pkgconfigdir}/libvncclient.pc
+%{_pkgconfigdir}/libvncserver.pc
 
 %files static
 %defattr(644,root,root,755)

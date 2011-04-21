@@ -1,15 +1,15 @@
---- LibVNCServer-0.9.1/configure.ac.orig	2007-05-27 17:14:22.000000000 +0200
-+++ LibVNCServer-0.9.1/configure.ac	2007-06-02 00:13:55.826402162 +0200
+--- LibVNCServer-0.9.8/configure.ac.orig	2011-03-29 13:58:56.000000000 +0200
++++ LibVNCServer-0.9.8/configure.ac	2011-04-21 19:24:48.099385243 +0200
 @@ -1,7 +1,7 @@
  # Process this file with autoconf to produce a configure script.
- AC_INIT(LibVNCServer, 0.9.7, http://sourceforge.net/projects/libvncserver)
- AM_INIT_AUTOMAKE(LibVNCServer, 0.9.7)
+ AC_INIT(LibVNCServer, 0.9.8, http://sourceforge.net/projects/libvncserver)
+ AM_INIT_AUTOMAKE(LibVNCServer, 0.9.8)
 -AM_CONFIG_HEADER(rfbconfig.h)
 +AC_CONFIG_HEADER(rfbconfig.h)
  AX_PREFIX_CONFIG_H([rfb/rfbconfig.h])
  
  # Checks for programs.
-@@ -617,8 +617,8 @@
+@@ -781,8 +781,8 @@
  AC_FUNC_STRFTIME
  AC_FUNC_VPRINTF
  AC_FUNC_FORK
@@ -20,7 +20,7 @@
  
  uname_s=`(uname -s) 2>/dev/null`
  if test "x$uname_s" = "xHP-UX"; then
-@@ -637,7 +637,7 @@
+@@ -801,7 +801,7 @@
  AM_CONDITIONAL(CYGIPC, test "$HAVE_CYGIPC" = "true")
  
  # Check if /dev/vcsa1 exists, if so, define LINUX
@@ -29,4 +29,3 @@
  
  # Check for OS X specific header
  AC_CHECK_HEADER(ApplicationServices/ApplicationServices.h, HAVE_OSX="true")
-
