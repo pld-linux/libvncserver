@@ -1,14 +1,5 @@
 --- LibVNCServer-0.9.8/configure.ac.orig	2011-03-29 13:58:56.000000000 +0200
 +++ LibVNCServer-0.9.8/configure.ac	2011-04-21 19:24:48.099385243 +0200
-@@ -1,7 +1,7 @@
- # Process this file with autoconf to produce a configure script.
- AC_INIT(LibVNCServer, 0.9.8, http://sourceforge.net/projects/libvncserver)
- AM_INIT_AUTOMAKE(LibVNCServer, 0.9.8)
--AM_CONFIG_HEADER(rfbconfig.h)
-+AC_CONFIG_HEADER(rfbconfig.h)
- AX_PREFIX_CONFIG_H([rfb/rfbconfig.h])
- 
- # Checks for programs.
 @@ -781,8 +781,8 @@
  AC_FUNC_STRFTIME
  AC_FUNC_VPRINTF
