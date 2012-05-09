@@ -17,6 +17,7 @@ BuildRequires:	gnutls-devel >= 2.4.0
 BuildRequires:	libgcrypt-devel >= 1.4.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtool
+BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXdamage-devel
