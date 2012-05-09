@@ -14,8 +14,8 @@
 @@ -801,7 +801,7 @@
  AM_CONDITIONAL(CYGIPC, test "$HAVE_CYGIPC" = "true")
  
- # Check if /dev/vcsa1 exists, if so, define LINUX
--AM_CONDITIONAL(LINUX, test -c /dev/vcsa1)
+ # Check if /usr/include/linux exists, if so, define LINUX
+-AM_CONDITIONAL(LINUX, test -d /usr/include/linux)
 +AM_CONDITIONAL(LINUX, true)
  
  # Check for OS X specific header
