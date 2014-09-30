@@ -4,15 +4,13 @@ Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera
 Name:		libvncserver
 Version:	0.9.9
 Release:	6
-Epoch:		0
-URL:		https://github.com/LibVNC/libvncserver/
 License:	GPL v2
 Group:		Libraries
 Source0:	https://github.com/LibVNC/libvncserver/archive/%{srcname}-%{version}.tar.gz
 # Source0-md5:	70422169b122765693d2a294d13e3714
 Patch0:		%{name}-linux.patch
 Patch1:		format_string.patch
-URL:		http://libvncserver.sourceforge.net/
+URL:		https://github.com/LibVNC/libvncserver/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	gnutls-devel >= 2.4.0
@@ -69,7 +67,7 @@ Johannesa Schindelina <Johannes.Schindelin@gmx.de>.
 Summary:	LibVNCServer header files
 Summary(pl.UTF-8):	Pliki nagłówkowe LibVNCServer
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Requires:	gnutls-devel >= 2.4.0
 Requires:	libgcrypt-devel >= 1.4.0
 Requires:	libjpeg-devel
@@ -85,7 +83,7 @@ Pliki nagłówkowe LibVNCServer.
 Summary:	Static LibVNCServer libraries
 Summary(pl.UTF-8):	Statyczne biblioteki LibVNCServer
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static LibVNCServer libraries.
@@ -97,7 +95,7 @@ Statyczne biblioteki LibVNCServer.
 Summary:	Example programs that use LibVNCServer
 Summary(pl.UTF-8):	Przykładowe programy wykorzystujące LibVNCServer
 Group:		Applications
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description progs
 Example programs that use LibVNCServer.
