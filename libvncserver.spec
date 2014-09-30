@@ -5,9 +5,10 @@ Name:		libvncserver
 Version:	0.9.9
 Release:	6
 Epoch:		0
+URL:		https://github.com/LibVNC/libvncserver/
 License:	GPL v2
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/libvncserver/%{srcname}-%{version}.tar.gz
+Source0:	https://github.com/LibVNC/libvncserver/archive/%{srcname}-%{version}.tar.gz
 # Source0-md5:	70422169b122765693d2a294d13e3714
 Patch0:		%{name}-linux.patch
 Patch1:		format_string.patch
