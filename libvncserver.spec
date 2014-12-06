@@ -1,22 +1,30 @@
-%define		srcname	LibVNCServer
+#
+# Conditional build:
+%bcond_with	openssl	# use OpenSSL instead of GnuTLS
+
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
-Version:	0.9.9
-Release:	6
+Version:	0.9.10
+Release:	1
 License:	GPL v2
 Group:		Libraries
-Source0:	https://github.com/LibVNC/libvncserver/archive/%{srcname}-%{version}.tar.gz
-# Source0-md5:	70422169b122765693d2a294d13e3714
+Source0:	https://github.com/LibVNC/libvncserver/archive/LibVNCServer-%{version}.tar.gz
+# Source0-md5:	e1b888fae717b06896f8aec100163d27
 Patch0:		%{name}-linux.patch
 Patch1:		format_string.patch
+Patch2:		%{name}-va.patch
 URL:		https://github.com/LibVNC/libvncserver/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	gnutls-devel >= 2.4.0
+%{!?with_openssl:BuildRequires:	gnutls-devel >= 2.4.0}
 BuildRequires:	libgcrypt-devel >= 1.4.0
 BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
 BuildRequires:	libtool
+BuildRequires:	libva-devel >= 1.2.0
+BuildRequires:	libva-x11-devel >= 1.2.0
+%{?with_openssl:BuildRequires:	openssl-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libX11-devel
@@ -27,12 +35,12 @@ BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	zlib-devel
-# not used (x11vnc moved to separate package)
-#BuildRequires:	openssl-devel
 # for noinst client_examples only
 #BuildRequires:	SDL-devel
-#BuildRequires:	ffmpeg-devel
-Requires:	gnutls >= 2.4.0
+#BuildRequires:	gtk+2-devel >= 2.0
+# for vnc2mpg example
+#BuildRequires:	ffmpeg-devel || lame-libs-devel
+%{!?with_openssl:Requires:	gnutls >= 2.4.0}
 Requires:	libgcrypt >= 1.4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -68,9 +76,11 @@ Summary:	LibVNCServer header files
 Summary(pl.UTF-8):	Pliki nagłówkowe LibVNCServer
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	gnutls-devel >= 2.4.0
+%{!?with_openssl:Requires:	gnutls-devel >= 2.4.0}
 Requires:	libgcrypt-devel >= 1.4.0
 Requires:	libjpeg-devel
+Requires:	libpng-devel
+%{?with_openssl:Requires:	openssl-devel}
 Requires:	zlib-devel
 
 %description devel
@@ -91,40 +101,22 @@ Static LibVNCServer libraries.
 %description static -l pl.UTF-8
 Statyczne biblioteki LibVNCServer.
 
-%package progs
-Summary:	Example programs that use LibVNCServer
-Summary(pl.UTF-8):	Przykładowe programy wykorzystujące LibVNCServer
-Group:		Applications
-Requires:	%{name} = %{version}-%{release}
-
-%description progs
-Example programs that use LibVNCServer.
-
-%description progs -l pl.UTF-8
-Przykładowe programy wykorzystujące LibVNCServer.
-
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup -q -n libvncserver-LibVNCServer-%{version}
 %patch0 -p1
 %patch1 -p1
-
-install -d x11vnc/misc
-touch x11vnc/Makefile.in x11vnc/misc/Makefile.in
-
-awk 'BEGIN { f=1; } /# libtool.m4/ { f=0; } { if (f) { print $0; } }' acinclude.m4 > acinclude.m4.new
-mv acinclude.m4.new acinclude.m4
-
-sed -i -e '/AC_CONFIG_FILES.*x11vnc/d' configure.ac
+%patch2 -p1
 
 %build
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 %configure \
 	--disable-silent-rules \
-	--without-x11vnc
+	%{?with_openssl:--without-gnutls} \
+	%{!?with_openssl:--without-ssl}
 %{__make}
 
 %install
@@ -133,7 +125,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# *.la not removed - *.pc don't contain Requires.private nor Libs.private
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libvnc*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -154,8 +147,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/libvncserver-config
 %attr(755,root,root) %{_libdir}/libvncclient.so
 %attr(755,root,root) %{_libdir}/libvncserver.so
-%{_libdir}/libvncclient.la
-%{_libdir}/libvncserver.la
 %{_includedir}/rfb
 %{_pkgconfigdir}/libvncclient.pc
 %{_pkgconfigdir}/libvncserver.pc
@@ -164,7 +155,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libvncclient.a
 %{_libdir}/libvncserver.a
-
-%files progs
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/linuxvnc
