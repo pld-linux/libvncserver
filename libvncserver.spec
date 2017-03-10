@@ -5,15 +5,14 @@
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
-Version:	0.9.10
-Release:	3
+Version:	0.9.11
+Release:	1
 License:	GPL v2
 Group:		Libraries
+#Source0Download: https://github.com/LibVNC/libvncserver/releases
 Source0:	https://github.com/LibVNC/libvncserver/archive/LibVNCServer-%{version}.tar.gz
-# Source0-md5:	e1b888fae717b06896f8aec100163d27
+# Source0-md5:	7f06104d5c009813e95142932c4ddb06
 Patch0:		%{name}-linux.patch
-Patch1:		format_string.patch
-Patch2:		%{name}-va.patch
 URL:		https://github.com/LibVNC/libvncserver/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -27,6 +26,7 @@ BuildRequires:	libva-x11-devel >= 1.2.0
 %{?with_openssl:BuildRequires:	openssl-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
+BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXdamage-devel
 BuildRequires:	xorg-lib-libXext-devel
@@ -104,8 +104,6 @@ Statyczne biblioteki LibVNCServer.
 %prep
 %setup -q -n libvncserver-LibVNCServer-%{version}
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %{__libtoolize}
@@ -138,9 +136,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/libvncclient.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libvncclient.so.0
+%attr(755,root,root) %ghost %{_libdir}/libvncclient.so.1
 %attr(755,root,root) %{_libdir}/libvncserver.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libvncserver.so.0
+%attr(755,root,root) %ghost %{_libdir}/libvncserver.so.1
 
 %files devel
 %defattr(644,root,root,755)
