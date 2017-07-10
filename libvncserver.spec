@@ -6,13 +6,14 @@ Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
 Version:	0.9.11
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Libraries
 #Source0Download: https://github.com/LibVNC/libvncserver/releases
 Source0:	https://github.com/LibVNC/libvncserver/archive/LibVNCServer-%{version}.tar.gz
 # Source0-md5:	7f06104d5c009813e95142932c4ddb06
 Patch0:		%{name}-linux.patch
+Patch1:		%{name}-noLlibdir.patch
 URL:		https://github.com/LibVNC/libvncserver/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -104,6 +105,7 @@ Statyczne biblioteki LibVNCServer.
 %prep
 %setup -q -n libvncserver-LibVNCServer-%{version}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
