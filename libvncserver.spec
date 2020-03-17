@@ -1,29 +1,28 @@
 #
 # Conditional build:
-%bcond_with	openssl	# use OpenSSL instead of GnuTLS
+%bcond_with	openssl		# use OpenSSL instead of GnuTLS
+%bcond_without	static_libs	# static libraries
 
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
-Version:	0.9.11
-Release:	3
+Version:	0.9.12
+Release:	1
 License:	GPL v2
 Group:		Libraries
 #Source0Download: https://github.com/LibVNC/libvncserver/releases
 Source0:	https://github.com/LibVNC/libvncserver/archive/LibVNCServer-%{version}.tar.gz
-# Source0-md5:	7f06104d5c009813e95142932c4ddb06
-Patch0:		%{name}-linux.patch
-Patch1:		%{name}-noLlibdir.patch
+# Source0-md5:	dc2ae6433d2ce45b9f60034c7fb9c10a
+Patch0:		%{name}-libsuffix.patch
 URL:		https://github.com/LibVNC/libvncserver/
-BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake
+BuildRequires:	cyrus-sasl-devel >= 2
 %{!?with_openssl:BuildRequires:	gnutls-devel >= 2.4.0}
 BuildRequires:	libgcrypt-devel >= 1.4.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
-BuildRequires:	libtool
 BuildRequires:	libva-devel >= 1.2.0
 BuildRequires:	libva-x11-devel >= 1.2.0
+BuildRequires:	lzo-devel
 %{?with_openssl:BuildRequires:	openssl-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
@@ -37,10 +36,10 @@ BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	zlib-devel
 # for noinst client_examples only
-#BuildRequires:	SDL-devel
+#BuildRequires:	SDL2-devel >= 2.0
 #BuildRequires:	gtk+2-devel >= 2.0
 # for vnc2mpg example
-#BuildRequires:	ffmpeg-devel || lame-libs-devel
+#BuildRequires:	ffmpeg-devel >= 3.1.0
 %{!?with_openssl:Requires:	gnutls >= 2.4.0}
 Requires:	libgcrypt >= 1.4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -77,10 +76,12 @@ Summary:	LibVNCServer header files
 Summary(pl.UTF-8):	Pliki nagłówkowe LibVNCServer
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	cyrus-sasl-devel >= 2
 %{!?with_openssl:Requires:	gnutls-devel >= 2.4.0}
 Requires:	libgcrypt-devel >= 1.4.0
 Requires:	libjpeg-devel
 Requires:	libpng-devel
+Requires:	lzo-devel
 %{?with_openssl:Requires:	openssl-devel}
 Requires:	zlib-devel
 
@@ -105,28 +106,42 @@ Statyczne biblioteki LibVNCServer.
 %prep
 %setup -q -n libvncserver-LibVNCServer-%{version}
 %patch0 -p1
-%patch1 -p1
 
 %build
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--disable-silent-rules \
-	%{?with_openssl:--without-gnutls} \
-	%{!?with_openssl:--without-ssl}
+%if %{with static_libs}
+install -d build-static
+cd build-static
+%cmake .. \
+	-DBUILD_SHARED_LIBS=OFF \
+	-DWITH_FFMPEG=OFF \
+	%{?with_openssl:-DWITH_GNUTLS=OFF} \
+	%{!?with_openssl:-DWITH_OPENSSL=OFF} \
+	-DWITH_SDL=OFF
+
+%{__make}
+cd ..
+%endif
+
+install -d build
+cd build
+%cmake .. \
+	-DWITH_FFMPEG=OFF \
+	%{?with_openssl:-DWITH_GNUTLS=OFF} \
+	%{!?with_openssl:-DWITH_OPENSSL=OFF} \
+	-DWITH_SDL=OFF
+
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%if %{with static_libs}
+%{__make} -C build-static install \
 	DESTDIR=$RPM_BUILD_ROOT
+%endif
 
-# obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libvnc*.la
+%{__make} -C build install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -136,7 +151,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README.md TODO
 %attr(755,root,root) %{_libdir}/libvncclient.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libvncclient.so.1
 %attr(755,root,root) %{_libdir}/libvncserver.so.*.*.*
@@ -144,14 +159,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/libvncserver-config
 %attr(755,root,root) %{_libdir}/libvncclient.so
 %attr(755,root,root) %{_libdir}/libvncserver.so
 %{_includedir}/rfb
 %{_pkgconfigdir}/libvncclient.pc
 %{_pkgconfigdir}/libvncserver.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libvncclient.a
 %{_libdir}/libvncserver.a
+%endif
