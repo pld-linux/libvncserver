@@ -6,13 +6,13 @@
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
-Version:	0.9.13
+Version:	0.9.14
 Release:	1
 License:	GPL v2
 Group:		Libraries
 #Source0Download: https://github.com/LibVNC/libvncserver/releases
 Source0:	https://github.com/LibVNC/libvncserver/archive/LibVNCServer-%{version}.tar.gz
-# Source0-md5:	503b5527b93dce77e8b6a45f273f6e39
+# Source0-md5:	763da812ede855665efd40340b595234
 URL:		https://github.com/LibVNC/libvncserver/
 BuildRequires:	cyrus-sasl-devel >= 2
 %{!?with_openssl:BuildRequires:	gnutls-devel >= 2.4.0}
@@ -162,6 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/rfb
 %{_pkgconfigdir}/libvncclient.pc
 %{_pkgconfigdir}/libvncserver.pc
+%{_libdir}/cmake/LibVNCServer
 
 %if %{with static_libs}
 %files static
