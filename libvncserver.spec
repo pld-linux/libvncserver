@@ -7,13 +7,14 @@ Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
 Version:	0.9.14
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Libraries
 #Source0Download: https://github.com/LibVNC/libvncserver/releases
 Source0:	https://github.com/LibVNC/libvncserver/archive/LibVNCServer-%{version}.tar.gz
 # Source0-md5:	763da812ede855665efd40340b595234
 URL:		https://github.com/LibVNC/libvncserver/
+BuildRequires:	cmake >= 3.4
 BuildRequires:	cyrus-sasl-devel >= 2
 %{!?with_openssl:BuildRequires:	gnutls-devel >= 2.4.0}
 BuildRequires:	libgcrypt-devel >= 1.4.0
@@ -24,6 +25,7 @@ BuildRequires:	libva-x11-devel >= 1.2.0
 BuildRequires:	lzo-devel
 %{?with_openssl:BuildRequires:	openssl-devel}
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	sed >= 4.0
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	xorg-lib-libX11-devel
@@ -111,6 +113,7 @@ install -d build-static
 cd build-static
 %cmake .. \
 	-DBUILD_SHARED_LIBS=OFF \
+	-DCMAKE_INSTALL_LIBDIR=%{_lib} \
 	-DWITH_FFMPEG=OFF \
 	%{?with_openssl:-DWITH_GNUTLS=OFF} \
 	%{!?with_openssl:-DWITH_OPENSSL=OFF} \
@@ -123,6 +126,7 @@ cd ..
 install -d build
 cd build
 %cmake .. \
+	-DCMAKE_INSTALL_LIBDIR=%{_lib} \
 	-DWITH_FFMPEG=OFF \
 	%{?with_openssl:-DWITH_GNUTLS=OFF} \
 	%{!?with_openssl:-DWITH_OPENSSL=OFF} \
