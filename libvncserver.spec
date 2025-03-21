@@ -6,13 +6,13 @@
 Summary:	LibVNCServer - a for easy implementation of VNC/RDP server
 Summary(pl.UTF-8):	LibVNCServer - biblioteka do łatwego implementowania serwera VNC/RDP
 Name:		libvncserver
-Version:	0.9.14
-Release:	2
+Version:	0.9.15
+Release:	1
 License:	GPL v2
 Group:		Libraries
 #Source0Download: https://github.com/LibVNC/libvncserver/releases
 Source0:	https://github.com/LibVNC/libvncserver/archive/LibVNCServer-%{version}.tar.gz
-# Source0-md5:	763da812ede855665efd40340b595234
+# Source0-md5:	5d2ae75e866cb9b897302e70903aa93e
 URL:		https://github.com/LibVNC/libvncserver/
 BuildRequires:	cmake >= 3.4
 BuildRequires:	cyrus-sasl-devel >= 2
@@ -36,11 +36,13 @@ BuildRequires:	xorg-lib-libXinerama-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXtst-devel
 BuildRequires:	zlib-devel
-# for noinst client_examples only
+# for disabled (noinst) examples only
 #BuildRequires:	SDL2-devel >= 2.0
-#BuildRequires:	gtk+2-devel >= 2.0
-# for vnc2mpg example
+#BuildRequires:	Qt5Core-devel >= 5
+#BuildRequires:	Qt5Widgets-devel >= 5
 #BuildRequires:	ffmpeg-devel >= 3.1.0
+#BuildRequires:	gtk+2-devel >= 2.0
+#BuildRequires:	libsshtunnel-devel
 %{!?with_openssl:Requires:	gnutls >= 2.4.0}
 Requires:	libgcrypt >= 1.4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -114,10 +116,9 @@ cd build-static
 %cmake .. \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DCMAKE_INSTALL_LIBDIR=%{_lib} \
-	-DWITH_FFMPEG=OFF \
+	-DWITN_EXAMPLES=OFF \
 	%{?with_openssl:-DWITH_GNUTLS=OFF} \
-	%{!?with_openssl:-DWITH_OPENSSL=OFF} \
-	-DWITH_SDL=OFF
+	%{!?with_openssl:-DWITH_OPENSSL=OFF}
 
 %{__make}
 cd ..
@@ -127,10 +128,9 @@ install -d build
 cd build
 %cmake .. \
 	-DCMAKE_INSTALL_LIBDIR=%{_lib} \
-	-DWITH_FFMPEG=OFF \
+	-DWITN_EXAMPLES=OFF \
 	%{?with_openssl:-DWITH_GNUTLS=OFF} \
-	%{!?with_openssl:-DWITH_OPENSSL=OFF} \
-	-DWITH_SDL=OFF
+	%{!?with_openssl:-DWITH_OPENSSL=OFF}
 
 %{__make}
 
